@@ -71,7 +71,10 @@ function App() {
       <br />
       {/* <Wallet EthPrice={EthApiData} /> */}
       <br />
-      <Analysis addToWatchList={addToWatchList} watchListArr={watchListArr} />
+      <Analysis
+        addToWatchList={addToWatchList}
+        coinListApiData={coinListApiData}
+      />
     </div>
   );
 }

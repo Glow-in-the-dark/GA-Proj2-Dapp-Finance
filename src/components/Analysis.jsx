@@ -18,7 +18,7 @@ const Analysis = (props) => {
       <input onChange={handleChange} placeholder="Token ID (coingecko)"></input>
       <button onClick={handleSubmit}> Add </button>
       <br />
-      <Tables watchListArr={props.watchListArr} />
+      <Tables coinListApiData={props.coinListApiData} />
     </div>
   );
 };
