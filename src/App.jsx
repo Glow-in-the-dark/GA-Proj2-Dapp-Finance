@@ -1,44 +1,20 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import Web3 from "web3";
+import Wallet from "./components/Wallet";
 
 function App() {
-  // web3 part start-----------------
-  const [account, setAccount] = useState();
-  const [network, setNetwork] = useState();
-  const [balance, setBalance] = useState();
+  const [BtcApiData, setBtcApiData] = useState({});
+  const [EthApiData, setEthApiData] = useState({});
+  const [BnbApiData, setBnbApiData] = useState({});
+  const [watchListArr, setwatchListArr] = useState([]);
 
-  const web3 = new Web3(Web3.givenProvider);
-  useEffect(() => {
-    loadAccounts();
-  }, []);
-
-  useEffect(() => {
-    loadBalance();
-  }, [account]);
-
-  async function loadBalance() {
-    const network = await web3.eth.net.getNetworkType();
-    const balance = await web3.eth.getBalance(account);
-    // web3.eth.getBalance(account, <2nd parameter>), 2nd parameter is blockheight, gives u your balance at a specific time
-    setNetwork(network);
-    setBalance((balance / 1e18).toFixed(4));
-  }
-
-  async function loadAccounts() {
-    const accounts = await web3.eth.requestAccounts();
-    setAccount(accounts[0]);
-  }
-  // web3 part end-----------------
-  // Fetching CoinGecko Data--------------
-  const [EthPriceApiData, setEthPriceApiData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  // Function for Fetching CoinGecko BTC/ETH/BNB price Data (Start) --------------
   const fetchSpecificData = async (url, signal) => {
     setIsLoading(true); // show user it is processing/loading
     setError(null);
-    setEthPriceApiData(null);
 
     try {
       const res = await fetch(url, { signal });
@@ -46,10 +22,41 @@ function App() {
       if (res.status !== 200) {
         throw new Error("something went wrong");
       }
-      const jsonData = await res.json();
+      const jsonData = await res.json(); // Acquired and store the RAW API data here, and convert to JSON format
       // console.log(jsonData);
-      // console.log(jsonData.ethereum.usd);
-      setEthPriceApiData(jsonData.ethereum.usd); //this is where it chunks the API data, or selected parts of Data into our "state"
+      // console.log(jsonData[0].id);
+
+      if (jsonData[0].id == "bitcoin") {
+        setBtcApiData(jsonData[0]);
+      } else if (jsonData[0].id == "ethereum") {
+        setEthApiData(jsonData[0]);
+      } else {
+        setBnbApiData(jsonData[0]);
+      }
+
+      if (jsonData[1].id == "bitcoin") {
+        setBtcApiData(jsonData[1]);
+      } else if (jsonData[1].id == "ethereum") {
+        setEthApiData(jsonData[1]);
+      } else {
+        setBnbApiData(jsonData[1]);
+      }
+
+      if (jsonData[2].id == "bitcoin") {
+        setBtcApiData(jsonData[2]);
+      } else if (jsonData[2].id == "ethereum") {
+        setEthApiData(jsonData[2]);
+      } else {
+        setBnbApiData(jsonData[2]);
+      }
+
+      console.log("watchlist", watchListArr);
+
+      console.log(BtcApiData);
+      console.log(EthApiData);
+      console.log(BnbApiData);
+
+      //setEthApiData(jsonData); //this is where it chunks the API data, or selected parts of Data into our "state"
     } catch (err) {
       if (err.name !== "AbortError") {
         setError(err.message);
@@ -57,9 +64,10 @@ function App() {
     }
     setIsLoading(false); // after finish loading.
   };
+  // Function for Fetching CoinGecko BTC/ETH/BNB price Data (End)--------------
 
   const FullUrlApi =
-    "https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd&include_market_cap=true&include_24hr_vol=true&precision=4";
+    "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin%2C%20ethereum%2C%20binancecoin&order=market_cap_desc&per_page=100&page=1&sparkline=false&price_change_percentage=24h";
 
   useEffect(() => {
     const controller = new AbortController();
@@ -69,23 +77,15 @@ function App() {
     return () => {
       controller.abort();
     };
-  }, [balance]);
-  // Fetching CoinGecko Data (End)--------------
+  }, []);
 
   return (
     <div>
       <h2>GA SEI-41</h2>
       <br />
-      <p> Your Account: {account}</p>
-      <p>
-        Your Balance:({network}):{balance}
-      </p>
-      <p>Ethereum Price: ${EthPriceApiData}</p>
+      <Wallet EthPrice={EthApiData} />
       <br />
-      <p>
-        Your wallet has ${(balance * EthPriceApiData).toFixed(2)} USD worth of
-        Ethereum
-      </p>
+      {/* <Analysis /> */}
     </div>
   );
 }
