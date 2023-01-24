@@ -5,7 +5,7 @@ const Analysis = (props) => {
   const [typeInput, setTypeInput] = useState("");
 
   const handleChange = (e) => {
-    setTypeInput(event.target.value);
+    setTypeInput(event.target.value.toLowerCase());
     // console.log(typeInput);
   };
 
@@ -18,7 +18,10 @@ const Analysis = (props) => {
       <input onChange={handleChange} placeholder="Token ID (coingecko)"></input>
       <button onClick={handleSubmit}> Add </button>
       <br />
-      <Tables coinListApiData={props.coinListApiData} />
+      <Tables
+        coinListApiData={props.coinListApiData}
+        removeFromWatchList={(index) => props.removeFromWatchList(index)}
+      />
     </div>
   );
 };

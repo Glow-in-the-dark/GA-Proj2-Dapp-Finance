@@ -19,6 +19,11 @@ function App() {
     setwatchListArr([...watchListArr, item]);
   };
 
+  const removeFromWatchList = (index) => {
+    const newArray = watchListArr.filter((eachToken, i) => i !== index); // filter by checking each product, and if the index is same as the index passed, do not include in array.
+    setwatchListArr(newArray);
+  };
+
   // Function for Fetching CoinGecko BTC/ETH/BNB price Data (Start) --------------
   const fetchSpecificData = async (url, signal) => {
     setIsLoading(true); // show user it is processing/loading
@@ -64,7 +69,7 @@ function App() {
 
   return (
     <div>
-      {JSON.stringify(coinListApiData)}
+      {/* {JSON.stringify(coinListApiData)} */}
       <h2>GA SEI-41</h2>
       <br />
       {/* <Wallet EthPrice={EthApiData} /> */}
@@ -72,6 +77,7 @@ function App() {
       <Analysis
         addToWatchList={addToWatchList}
         coinListApiData={coinListApiData}
+        removeFromWatchList={(index) => removeFromWatchList(index)}
       />
     </div>
   );
