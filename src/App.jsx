@@ -4,7 +4,7 @@ import Wallet from "./components/Wallet";
 import Analysis from "./components/Analysis";
 
 function App() {
-  const [coinListApiData, setCoinListApiData] = useState({});
+  const [coinListApiData, setCoinListApiData] = useState([]);
   const [EthApiData, setEthApiData] = useState({});
   const [watchListArr, setwatchListArr] = useState([
     "bitcoin",
@@ -52,12 +52,9 @@ function App() {
       query += watchListArr[i] + "%2C%20";
     }
 
-    console.log(query);
-
     const FullUrlApi = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${query}&order=market_cap_desc&per_page=100&page=1&sparkline=false&price_change_percentage=24h`;
 
     fetchSpecificData(FullUrlApi, controller.signal);
-    console.log(coinListApiData);
 
     // cleanup code
     return () => {
@@ -67,6 +64,7 @@ function App() {
 
   return (
     <div>
+      {JSON.stringify(coinListApiData)}
       <h2>GA SEI-41</h2>
       <br />
       {/* <Wallet EthPrice={EthApiData} /> */}
