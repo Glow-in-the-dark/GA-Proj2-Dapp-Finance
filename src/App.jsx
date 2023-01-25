@@ -5,8 +5,6 @@ import Analysis from "./components/Analysis";
 import useFetch from "./hooks/useFetch"; //importing the hook
 import { Route, Routes, Navigate } from "react-router-dom";
 import NavBar from "./components/NavBar";
-import PageTwo from "./pages/PageTwo";
-import PageThree from "./pages/PageThree";
 
 function App() {
   const [coinListApiData, setCoinListApiData] = useState([]);
@@ -116,20 +114,29 @@ function App() {
     <div>
       <NavBar />
       <Routes>
-        <Route path="/" element={<Navigate replace to="/page-two" />} />
-        <Route path="/page-two" element={<PageTwo />} />
-        <Route path="/page-three" element={<PageThree />} />
+        <Route path="/" element={<Navigate replace to="/wallet" />} />
+        <Route path="/wallet" element={<Wallet EthPrice={EthPrice} />} />
+        <Route
+          path="/watchlist"
+          element={
+            <Analysis
+              addToWatchList={addToWatchList}
+              coinListApiData={coinListApiData}
+              removeFromWatchList={(index) => removeFromWatchList(index)}
+            />
+          }
+        />
       </Routes>
-      <h2>Crypto WatchList</h2>
+
       {/* {EthPrice} */}
       <br />
-      <Wallet EthPrice={EthPrice} />
+      {/* <Wallet EthPrice={EthPrice} />
       <br />
       <Analysis
         addToWatchList={addToWatchList}
         coinListApiData={coinListApiData}
         removeFromWatchList={(index) => removeFromWatchList(index)}
-      />
+      /> */}
     </div>
   );
 }

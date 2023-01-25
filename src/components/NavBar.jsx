@@ -10,19 +10,19 @@ const NavBar = () => {
           <li>
             {/* <Link to="/page-two">Page Two</Link> */}
             <NavLink
-              to="/page-two"
+              to="/wallet"
               className={(navData) => (navData.isActive ? styles.active : "")}
             >
-              Page Two
+              Web3 Wallet
             </NavLink>
           </li>
           <li>
             {/* <Link to="/page-three">Page Three</Link> */}
             <NavLink
-              to="/page-three"
+              to="/watchlist"
               className={(navData) => (navData.isActive ? styles.active : "")}
             >
-              Page Three
+              My WatchList
             </NavLink>
           </li>
         </ul>
