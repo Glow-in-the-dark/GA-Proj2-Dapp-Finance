@@ -3,7 +3,7 @@ import React from "react";
 const Tables = (props) => {
   let HtmlTablesRow = props.coinListApiData.map((each, i) => {
     return (
-      <tr key={i} name={each.name}>
+      <tr key={i} id={each.id}>
         <td>{i + 1}</td>
         <td>{each.name}</td>
         <td>${each.current_price.toLocaleString("en-US")}</td>
@@ -13,7 +13,9 @@ const Tables = (props) => {
         <td>{(each.market_cap / each.fully_diluted_valuation).toFixed(2)}</td>
         <td>{each.total_volume.toLocaleString("en-US")}</td>
         <td>
-          <button onClick={() => props.removeFromWatchList(i)}>Remove</button>
+          <button onClick={() => props.removeFromWatchList(each.id)}>
+            Remove
+          </button>
         </td>
       </tr>
     );

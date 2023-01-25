@@ -3,13 +3,17 @@ import { useEffect, useState } from "react";
 import Wallet from "./components/Wallet";
 import Analysis from "./components/Analysis";
 import useFetch from "./hooks/useFetch"; //importing the hook
+import { Route, Routes, Navigate } from "react-router-dom";
+import NavBar from "./components/NavBar";
+import PageTwo from "./pages/PageTwo";
+import PageThree from "./pages/PageThree";
 
 function App() {
   const [coinListApiData, setCoinListApiData] = useState([]);
-  const [EthApiData, setEthApiData] = useState({});
-
   const [watchListArr, setWatchListArr] = useState([]);
 
+  const [EthAPI, fetchEthAPI] = useFetch();
+  const [EthPrice, setEthPrice] = useState({});
   const [singlePriceDataHistory, fetchData] = useFetch(); //using the new Hook created, to fetch individual historical prices.
   // const [allHistoricalPrices, setAllHistoricalPrices] = useState([]);
 
@@ -20,12 +24,13 @@ function App() {
     setWatchListArr([...watchListArr, item]);
   };
 
-  const removeFromWatchList = (index) => {
-    const newArray = watchListArr.filter((eachToken, i) => i !== index); // filter by checking each product, and if the index is same as the index passed, do not include in array.
-    console.log("print");
+  const removeFromWatchList = (id) => {
+    // Remove via filter by checking each product, and if the "id" is same as the name in the Array, do not include in array.
+    let X = localStorage.getItem("persistantArray");
+    let arrayX = X.split(",");
+    let newArray = arrayX.filter((eachToken, i) => eachToken !== id);
     localStorage.setItem("persistantArray", newArray);
     setWatchListArr(newArray);
-    // let X = localStorage.getItem("persistantArray");
   };
 
   // Function for Fetching CoinGecko BTC/ETH/BNB price Data (Start) -----------------------------
@@ -40,8 +45,6 @@ function App() {
         throw new Error("something went wrong");
       }
       const jsonData = await res.json(); // Acquired and store the RAW API data here, and convert to JSON format
-      // console.log(jsonData);
-      // console.log(jsonData[0].id);
       setCoinListApiData(jsonData);
 
       //setEthApiData(jsonData); //this is where it chunks the API data, or selected parts of Data into our "state"
@@ -68,17 +71,22 @@ function App() {
   useEffect(() => {
     const controller = new AbortController();
 
+    // Batching Query
     let query = ``;
-    // console.log(watchListArr);
     for (let i = 0; i < watchListArr.length; i++) {
       query += watchListArr[i] + "%2C%20";
     }
-
     // Fetch Batch Mkt Data
     const FullUrlApi = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${query}&order=market_cap_desc&per_page=100&page=1&sparkline=false&price_change_percentage=24h`;
     if (watchListArr.length > 0) {
       fetchSpecificData(FullUrlApi, controller.signal);
     }
+
+    //Fetch Only Ethereum Price
+    // fetchEthAPI(
+    //   `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=ethereum&order=market_cap_desc&per_page=100&page=1&sparkline=false`
+    // );
+    // setEthPrice(EthAPI[0].current_price);
 
     /////////////////////// Fetch Individual Historical price
     // fetchData(
@@ -106,10 +114,16 @@ function App() {
 
   return (
     <div>
-      {/* {JSON.stringify(coinListApiData)} */}
-      <h2>GA SEI-41 {watchListArr}</h2>
+      <NavBar />
+      <Routes>
+        <Route path="/" element={<Navigate replace to="/page-two" />} />
+        <Route path="/page-two" element={<PageTwo />} />
+        <Route path="/page-three" element={<PageThree />} />
+      </Routes>
+      <h2>Crypto WatchList</h2>
+      {/* {EthPrice} */}
       <br />
-      {/* <Wallet EthPrice={EthApiData} /> */}
+      <Wallet EthPrice={EthPrice} />
       <br />
       <Analysis
         addToWatchList={addToWatchList}

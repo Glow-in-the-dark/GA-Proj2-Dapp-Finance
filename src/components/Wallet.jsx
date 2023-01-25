@@ -36,12 +36,12 @@ const Wallet = (props) => {
       <p>
         Your Balance:({network}):{balance}
       </p>
-      <p>Ethereum Price: ${props.EthPrice.current_price}</p>
+      {/* <p>Ethereum Price: ${props.EthPrice}</p>
       <br />
       <p>
-        Your wallet has ${(balance * props.EthPrice.current_price).toFixed(2)}{" "}
-        USD worth of Ethereum
-      </p>
+        Your wallet has ${(balance * props.EthPrice).toFixed(2)} USD worth of
+        Ethereum
+      </p> */}
     </div>
   );
 };
