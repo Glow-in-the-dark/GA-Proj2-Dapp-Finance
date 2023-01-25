@@ -10,7 +10,19 @@ const Analysis = (props) => {
   };
 
   const handleSubmit = () => {
+    // On Submitting, update the main watchListArr state,
     props.addToWatchList(typeInput);
+    // On Submitting, also update the "localeStorage", with the "key" called persistantArray
+    const store = [localStorage.getItem("persistantArray")]; // store the value of .getItem to store.
+    // if empty, get the Key, and the Input Value. and if there is a value, spread it and put the new value behind, so it becomes an array.
+    if (store[0] === null) {
+      localStorage.setItem("persistantArray", typeInput);
+    } else {
+      let X = localStorage.getItem("persistantArray");
+      //console.log(typeof X); // string (type)
+      X = [...[X], typeInput];
+      localStorage.setItem("persistantArray", X);
+    }
   };
 
   return (

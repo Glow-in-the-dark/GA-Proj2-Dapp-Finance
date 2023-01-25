@@ -3,7 +3,7 @@ import React from "react";
 const Tables = (props) => {
   let HtmlTablesRow = props.coinListApiData.map((each, i) => {
     return (
-      <tr key={i}>
+      <tr key={i} name={each.name}>
         <td>{i + 1}</td>
         <td>{each.name}</td>
         <td>${each.current_price.toLocaleString("en-US")}</td>
@@ -26,14 +26,14 @@ const Tables = (props) => {
           <th>#</th>
           <th>Coin</th>
           <th>Price</th>
-          <th>% Price Change</th>
+          <th>% Change</th>
           <th>FDV</th>
           <th>MktCap</th>
           <th>Mkt Cap/FDV</th>
           <th>24h Volume</th>
           <th>Remove</th>
         </tr>
-        {HtmlTablesRow}
+        {HtmlTablesRow.length > 0 ? HtmlTablesRow : ""}
       </table>
     </div>
   );
