@@ -45,9 +45,9 @@ const Wallet = (props) => {
       </p>
       <p className="flex justify-center">${props.EthPrice}</p>
       <br />
-      <p className="flex justify-center">
-        Your wallet has ${(balance * props.EthPrice).toFixed(2)} USD worth of
-        Ethereum
+      <p className="flex justify-center underline">
+        Your wallet has ${(balance * props.EthPrice).toFixed(2)}
+        USD worth of Ethereum
       </p>
     </div>
   );

@@ -119,10 +119,10 @@ function App() {
 
     // important to do this validation check, else, on mount it will be undefined, and keep returning error. So it only runs which certain checks are passed.
     if (Array.isArray(EthAPI) && EthAPI.length === 1) {
-      console.log("validated");
-      console.log("ETHAPI", EthAPI);
-      console.log("ETHAPI.[0]", EthAPI[0]);
-      console.log("ETHAPI.currentPrice", EthAPI[0].current_price);
+      // console.log("validated");
+      // console.log("ETHAPI", EthAPI);
+      // console.log("ETHAPI.[0]", EthAPI[0]);
+      // console.log("ETHAPI.currentPrice", EthAPI[0].current_price);
       setEthPrice(EthAPI[0].current_price);
     }
   }, [EthAPI]);
