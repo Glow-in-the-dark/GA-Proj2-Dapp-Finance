@@ -31,19 +31,21 @@ const Wallet = (props) => {
   // web3 part end-----------------
 
   return (
-    <div className="container mx-auto bg-slate-200">
-      <p className="font-mono font-bold"> Your Account: </p>
-      <p> {account} </p>
+    <div className="container mx-auto bg-slate-200 p-6 mt-12 ">
+      <p className="font-mono font-bold flex justify-center"> Your Account: </p>
+      <p className="flex justify-center"> {account} </p>
       <br />
-      <p className="font-mono font-bold">Your Balance:</p>
-      <p>
-        {balance} ETH({network})
+      <p className="font-mono font-bold flex justify-center">Your Balance:</p>
+      <p className="flex justify-center">
+        {balance} ETH ({network})
       </p>
       <br />
-      <p className="font-mono font-bold">Current Ethereum Price:</p>
-      <p>${props.EthPrice}</p>
+      <p className="font-mono font-bold flex justify-center">
+        Current Ethereum Price:
+      </p>
+      <p className="flex justify-center">${props.EthPrice}</p>
       <br />
-      <p>
+      <p className="flex justify-center">
         Your wallet has ${(balance * props.EthPrice).toFixed(2)} USD worth of
         Ethereum
       </p>
