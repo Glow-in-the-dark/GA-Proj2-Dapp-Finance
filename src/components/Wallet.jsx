@@ -31,17 +31,22 @@ const Wallet = (props) => {
   // web3 part end-----------------
 
   return (
-    <div>
-      <p> Your Account: {account}</p>
+    <div className="container mx-auto bg-slate-200">
+      <p className="font-mono font-bold"> Your Account: </p>
+      <p> {account} </p>
+      <br />
+      <p className="font-mono font-bold">Your Balance:</p>
       <p>
-        Your Balance:({network}):{balance}
+        {balance} ETH({network})
       </p>
-      {/* <p>Ethereum Price: ${props.EthPrice}</p>
+      <br />
+      <p className="font-mono font-bold">Current Ethereum Price:</p>
+      <p>${props.EthPrice}</p>
       <br />
       <p>
         Your wallet has ${(balance * props.EthPrice).toFixed(2)} USD worth of
         Ethereum
-      </p> */}
+      </p>
     </div>
   );
 };

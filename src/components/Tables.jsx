@@ -13,7 +13,7 @@ const Tables = (props) => {
         <td>${each.current_price.toLocaleString("en-US")}</td>
         <td>{each.price_change_percentage_24h.toFixed(2)}%</td>
         <td>${each.fully_diluted_valuation.toLocaleString("en-US")}</td>
-        <td>{each.market_cap.toLocaleString("en-US")}</td>
+        <td>${each.market_cap.toLocaleString("en-US")}</td>
         <td>{(each.market_cap / each.fully_diluted_valuation).toFixed(2)}</td>
         <td>{each.total_volume.toLocaleString("en-US")}</td>
         <td>
@@ -45,14 +45,18 @@ const Tables = (props) => {
             <th scope="col" class="px-6 py-3">
               % Change
             </th>
-            <th scope="col" class="px-6 py-3">
+            <th
+              scope="col"
+              class="px-6 py-3 underline"
+              data-popover-target="FDV"
+            >
               FDV
             </th>
             <th scope="col" class="px-6 py-3">
               MktCap
             </th>
             <th scope="col" class="px-6 py-3">
-              Mkt Cap/FDV
+              MktCap/FDV
             </th>
             <th scope="col" class="px-6 py-3">
               24h Volume
@@ -62,6 +66,26 @@ const Tables = (props) => {
         </thead>
         {HtmlTablesRow.length > 0 ? HtmlTablesRow : ""}
       </table>
+      {/* This part is for pop over*/}
+      <div
+        data-popover
+        id="FDV"
+        role="tooltip"
+        class="absolute z-10 invisible inline-block w-64 text-sm font-light text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800"
+      >
+        <div class="px-3 py-2 bg-gray-100 border-b border-gray-200 rounded-t-lg dark:border-gray-600 dark:bg-gray-700">
+          <h3 class="font-semibold text-gray-900 dark:text-white">
+            FDV (Fully Diluted Valuation)
+          </h3>
+        </div>
+        <div class="px-3 py-2">
+          <p>
+            <p className="font-bold">Price * Total Amt of token</p> (inclusive
+            of both liquid and illiquid tokens)
+          </p>
+        </div>
+        <div data-popper-arrow></div>
+      </div>
     </div>
   );
 };
