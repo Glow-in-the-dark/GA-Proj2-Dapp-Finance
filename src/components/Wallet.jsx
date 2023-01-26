@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import Web3 from "web3";
 
 const Wallet = (props) => {
-  // web3 part start-----------------
   const [account, setAccount] = useState();
   const [network, setNetwork] = useState();
   const [balance, setBalance] = useState();
@@ -10,12 +9,21 @@ const Wallet = (props) => {
   const web3 = new Web3(Web3.givenProvider);
   useEffect(() => {
     loadAccounts();
-  }, []);
+  }, [network]);
 
   useEffect(() => {
     loadBalance();
-  }, [account]);
+  }, [account, network]);
 
+  useEffect(() => {
+    if (network === "main") {
+      alert(
+        "You are now on Mainnet, Be wary if you are sending any transactions"
+      );
+    }
+  }, [network]);
+
+  // retrieving data from the blockchain, and loading it onto state, by setState. -----------
   async function loadBalance() {
     const network = await web3.eth.net.getNetworkType();
     const balance = await web3.eth.getBalance(account);
@@ -28,7 +36,7 @@ const Wallet = (props) => {
     const accounts = await web3.eth.requestAccounts();
     setAccount(accounts[0]);
   }
-  // web3 part end-----------------
+  // -------------- end of ( setting state of network,account,balance )--------------
 
   return (
     <div className="container mx-auto bg-slate-200 p-6 mt-12 ">
