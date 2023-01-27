@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Web3 from "web3";
+import BuyMeCoffee from "./BuyMeCoffee";
 
 const Wallet = (props) => {
   const [account, setAccount] = useState();
@@ -39,25 +40,33 @@ const Wallet = (props) => {
   // -------------- end of ( setting state of network,account,balance )--------------
 
   return (
-    <div className="container mx-auto bg-slate-200 p-6 mt-12 ">
-      <p className="font-mono font-bold flex justify-center"> Your Account: </p>
-      <p className="flex justify-center"> {account} </p>
-      <br />
-      <p className="font-mono font-bold flex justify-center">Your Balance:</p>
-      <p className="flex justify-center">
-        {balance} ETH ({network})
-      </p>
-      <br />
-      <p className="font-mono font-bold flex justify-center">
-        Current Ethereum Price:
-      </p>
-      <p className="flex justify-center">${props.EthPrice}</p>
-      <br />
-      <p className="flex justify-center underline">
-        Your wallet has ${(balance * props.EthPrice).toFixed(2)}
-        USD worth of Ethereum
-      </p>
-    </div>
+    <>
+      <div className="container mx-auto bg-slate-200 p-6 mt-12 ">
+        <p className="font-mono font-bold flex justify-center">
+          {" "}
+          Your Account:{" "}
+        </p>
+        <p className="flex justify-center"> {account} </p>
+        <br />
+        <p className="font-mono font-bold flex justify-center">Your Balance:</p>
+        <p className="flex justify-center">
+          {balance} ETH ({network})
+        </p>
+        <br />
+        <p className="font-mono font-bold flex justify-center">
+          Current Ethereum Price:
+        </p>
+        <p className="flex justify-center">${props.EthPrice}</p>
+        <br />
+        <p className="flex justify-center underline">
+          Your wallet has ${(balance * props.EthPrice).toFixed(2)}
+          USD worth of Ethereum
+        </p>
+      </div>
+      <div>
+        <BuyMeCoffee />
+      </div>
+    </>
   );
 };
 

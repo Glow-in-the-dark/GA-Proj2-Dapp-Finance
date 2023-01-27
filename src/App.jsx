@@ -114,7 +114,6 @@ function App() {
 
   //use this workaround to make it sort of "async"
   useEffect(() => {
-    console.log("run useeffect2");
     // console.log("ETHAPI", EthAPI);
 
     // important to do this validation check, else, on mount it will be undefined, and keep returning error. So it only runs which certain checks are passed.
